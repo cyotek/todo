@@ -1,0 +1,22 @@
+﻿@model TodoItem
+
+<tr>
+  <td>
+    <form asp-page-handler="MarkDone" method="POST">
+      <input type="checkbox" class="done-checkbox">
+      <input type="hidden" asp-for="Id">
+    </form>
+  </td>
+  <td>
+    @Model.Title
+  </td>
+  <td>
+    @Model.DueAt.Humanize()
+  </td>
+  <td>
+    <form asp-page-handler="DeleteItem" method="POST">
+      <input type="hidden" asp-for="Id">
+      <button type="submit">Delete</button>
+    </form>
+  </td>
+</tr>

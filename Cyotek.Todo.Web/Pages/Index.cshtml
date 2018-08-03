@@ -1,0 +1,46 @@
+﻿@page
+@model IndexModel
+
+@{
+  IdentityUser user;
+
+  user = await Model.GetCurrentUser();
+
+  if (user != null)
+  {
+    ViewData["Title"] = "My Todo's";
+  }
+  else
+  {
+    ViewData["Title"] = "Welcome";
+  }
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (user != null)
+{
+  <div class="panel panel-default todo-panel">
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>&#x2714;</th>
+          <th>Task</th>
+          <th>Due</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      @foreach (TodoItem item in Model.Items)
+      {
+        @await Html.PartialAsync("_TodoRow", item)
+      }
+    </table>
+
+    <div class="panel-footer add-item-form">
+      @await Html.PartialAsync("_AddTodo", new TodoItem())
+    </div>
+
+  </div>
+}

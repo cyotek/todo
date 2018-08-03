@@ -1,0 +1,9 @@
+.vs/
+deploy/
+bin/
+obj/
+
+
+Cyotek.Todo.Web/todo.db
+*.user
+*.suo

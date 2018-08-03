@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>aspnet-todo-0141B6D2-89BD-4158-AF35-BE141410FF5E</UserSecretsId>
+    <RootNamespace>Cyotek.Todo</RootNamespace>
+    <AssemblyName>Cyotek.Todo.Web</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="todo.db" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="humanizer" Version="2.4.2" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SQlite" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cyotek.Todo\Cyotek.Todo.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Pages\_TodoRow.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+</Project>
