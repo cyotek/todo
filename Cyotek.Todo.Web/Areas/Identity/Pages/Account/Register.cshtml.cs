@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Cyotek.Todo.Areas.Identity.Pages.Account
 {
@@ -19,17 +20,20 @@ namespace Cyotek.Todo.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+    private readonly IOptions<AppSettings> _settings;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
+        IOptions<AppSettings> settings)
     {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+      _settings = settings;
         }
 
         [BindProperty]
@@ -65,6 +69,10 @@ namespace Cyotek.Todo.Areas.Identity.Pages.Account
         {
             returnUrl = returnUrl ?? Url.Content("~/");
 
+          if(!_settings.Value.AllowNewUserRegistration)
+      {
+        this.ModelState.AddModelError("RegistrationDisabled", "Registration is disabled.");
+      }
 
             if (ModelState.IsValid)
             {

@@ -1,6 +1,7 @@
 ﻿@page
 @model RegisterModel
 
+@inject IOptions<AppSettings> Settings;
 
 @{
   ViewData["Title"] = "Register";
@@ -10,6 +11,8 @@
 
 <p>Sorry, new user registration has been disabled at this time.</p>
 
+@if (Settings.Value.AllowNewUserRegistration)
+{
   <div class="row">
     <div class="col-md-4">
       <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
@@ -35,6 +38,7 @@
       </form>
     </div>
   </div>
+}
 
 @section Scripts {
   <partial name="_ValidationScriptsPartial" />

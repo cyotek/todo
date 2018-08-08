@@ -1,6 +1,7 @@
 ﻿@page
 @model LoginModel
 
+@inject IOptions<AppSettings> Settings;
 
 @{
   ViewData["Title"] = "Log in";
@@ -39,9 +40,12 @@
           <p>
             <a asp-page="./ForgotPassword">Forgot your password?</a>
           </p>
+          @if (Settings.Value.AllowNewUserRegistration)
+          {
             <p>
               <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
             </p>
+          }
         </div>
         </form>
       </section>

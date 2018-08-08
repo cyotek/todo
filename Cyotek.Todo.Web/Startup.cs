@@ -42,9 +42,9 @@ namespace Cyotek.Todo
       {
         app.UseExceptionHandler("/Error");
         app.UseHsts();
+        app.UseHttpsRedirection();
       }
 
-      app.UseHttpsRedirection();
       app.UseStaticFiles();
       app.UseCookiePolicy();
 
@@ -70,6 +70,8 @@ namespace Cyotek.Todo
       services.AddScoped<ITodoItemService, TodoItemService>();
 
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+      services.Configure<AppSettings>(Configuration.GetSection("todo"));
     }
 
     #endregion
