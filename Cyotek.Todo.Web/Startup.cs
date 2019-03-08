@@ -1,3 +1,4 @@
+using System.IO;
 using Cyotek.Todo.Data;
 using Cyotek.Todo.Services;
 using Microsoft.AspNetCore.Builder;
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +35,17 @@ namespace Cyotek.Todo
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
+      // https://weblog.west-wind.com/posts/2017/Sep/09/Configuring-LetsEncrypt-for-ASPNET-Core-and-IIS
+      app.UseRouter(r =>
+                    {
+                      r.MapGet(".well-known/acme-challenge/{id}", async (request, response, routeData) =>
+                                                                  {
+                                                                    var id = routeData.Values["id"] as string;
+                                                                    var file = Path.Combine(env.WebRootPath, ".well-known", "acme-challenge", id);
+                                                                    await response.SendFileAsync(file);
+                                                                  });
+                    });
+
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
@@ -44,6 +57,8 @@ namespace Cyotek.Todo
         app.UseHsts();
         app.UseHttpsRedirection();
       }
+
+
 
       app.UseStaticFiles();
       app.UseCookiePolicy();
